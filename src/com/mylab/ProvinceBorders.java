@@ -5,12 +5,17 @@ import javax.xml.parsers.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
-import java.util.*;
 import java.io.*;
 
 public class ProvinceBorders {
 
 	public static void main(String argv[]) {
+		
+		Reader reader;
+        FileWriter outputStream = null;
+        StringBuilder line = new StringBuilder(64);
+        File file;
+        
 		try {
 
 			SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -133,7 +138,39 @@ public class ProvinceBorders {
 
 			saxParser.parse("/home/jan/Downloads/geoserver-GetFeature.kml",
 					handler);
+			
+			file = new File("/home/jan/Downloads/geoserver-GetFeature.tmp");
+            InputStream in = new FileInputStream(file);
+            reader = new InputStreamReader(in);
+            outputStream = new FileWriter("/home/jan/Downloads/geoserver-GetFeature.tmp2");
 
+            int c;
+            
+	        try {
+	        	while ((c = reader.read()) != -1) {
+	            	if ((char) c == ' ') {
+	            		line.append('\n');
+	            		String s = line.toString();
+	            		outputStream.write(s);
+	            		line.setLength(0);
+	            	}
+	            	else {
+	            		line.append((char)c);
+	            	}
+	            }
+	        } finally {
+        		line.append('\n');
+        		String s = line.toString();
+        		outputStream.write(s);
+        		line.setLength(0);
+	            if (in != null) {
+	                in.close();
+	            }
+	            if (outputStream != null) {
+	                outputStream.close();
+	            }
+	        }
+	        
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
