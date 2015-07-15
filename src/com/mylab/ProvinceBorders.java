@@ -15,7 +15,8 @@ public class ProvinceBorders {
 			SAXParser saxParser = factory.newSAXParser();
 
 			DefaultHandler handler = new DefaultHandler() {
-
+				
+				boolean bSimpleData = false;
 				boolean bMultiGeometry = false;
 				boolean bPolygon = false;
 				boolean bouterBoundaryIs = false;
@@ -26,7 +27,11 @@ public class ProvinceBorders {
 						String qName, Attributes attributes)
 						throws SAXException {
 
-					System.out.println("Start Element :" + qName);
+/*					System.out.println("Start Element :" + qName); */
+
+					if (qName.equalsIgnoreCase("SimpleData")) {
+						bSimpleData = true;
+					}
 
 					if (qName.equalsIgnoreCase("MultiGeometry")) {
 						bMultiGeometry = true;
@@ -53,40 +58,46 @@ public class ProvinceBorders {
 				public void endElement(String uri, String localName,
 						String qName) throws SAXException {
 
-					System.out.println("End Element :" + qName);
+/*					System.out.println("End Element :" + qName); */
 
 				}
 
 				public void characters(char ch[], int start, int length)
 						throws SAXException {
 
-					if (bMultiGeometry) {
-						System.out.println("MultiGeometry : "
+					if (bSimpleData) {
+						System.out.println("SimpleData : "
 								+ new String(ch, start, length));
+						bSimpleData = false;
+					}
+
+					if (bMultiGeometry) {
+/*						System.out.println("MultiGeometry : "
+								+ new String(ch, start, length)); */
 						bMultiGeometry = false;
 					}
 
 					if (bPolygon) {
-						System.out.println("Polygon : "
-								+ new String(ch, start, length));
+/*						System.out.println("Polygon : "
+								+ new String(ch, start, length)); */
 						bPolygon = false;
 					}
 
 					if (bouterBoundaryIs) {
-						System.out.println("bouterBoundaryIs : "
-								+ new String(ch, start, length));
+/*						System.out.println("bouterBoundaryIs : "
+								+ new String(ch, start, length)); */
 						bouterBoundaryIs = false;
 					}
 
 					if (bLinearRing) {
-						System.out.println("LinearRing : "
-								+ new String(ch, start, length));
+/*						System.out.println("LinearRing : "
+								+ new String(ch, start, length)); */
 						bLinearRing = false;
 					}
 
 					if (bcoordinates) {
-						System.out.println("coordinates : "
-								+ new String(ch, start, length));
+/*						System.out.println("coordinates : "
+								+ new String(ch, start, length)); */
 						bcoordinates = false;
 					}
 
