@@ -27,6 +27,7 @@ public class ProvinceBorders {
 				String province = null;
 				File file = null;
 				FileWriter writer = null;
+				private final StringBuilder characters = new StringBuilder(64);
 
 				public void startElement(String uri, String localName,
 						String qName, Attributes attributes)
@@ -63,17 +64,11 @@ public class ProvinceBorders {
 				public void endElement(String uri, String localName,
 						String qName) throws SAXException {
 
-					/* System.out.println("End Element :" + qName); */
-
-				}
-
-				public void characters(char ch[], int start, int length)
-						throws SAXException {
+					final String content = characters.toString().trim();
 
 					if (bSimpleData) {
-						String s = new String(ch, start, length);
-						if (!s.contains("provincies")) {
-							province = s;
+						if (!content.contains("provincies")) {
+							province = content;
 							if (province.equals("Drenthe")) {
 								file = new File(
 										"/home/jan/Downloads/geoserver-GetFeature.tmp");
@@ -100,49 +95,38 @@ public class ProvinceBorders {
 					}
 
 					if (bMultiGeometry) {
-						/*
-						 * System.out.println("MultiGeometry : " + new
-						 * String(ch, start, length));
-						 */
 						bMultiGeometry = false;
 					}
 
 					if (bPolygon) {
-						/*
-						 * System.out.println("Polygon : " + new String(ch,
-						 * start, length));
-						 */
 						bPolygon = false;
 					}
 
 					if (bouterBoundaryIs) {
-						/*
-						 * System.out.println("bouterBoundaryIs : " + new
-						 * String(ch, start, length));
-						 */
 						bouterBoundaryIs = false;
 					}
 
 					if (bLinearRing) {
-						/*
-						 * System.out.println("LinearRing : " + new String(ch,
-						 * start, length));
-						 */
 						bLinearRing = false;
 					}
 
 					if (bcoordinates) {
 						if (province.equals("Drenthe") && (writer != null)) {
-							String s = new String(ch, start, length);
 							try {
-								writer.write(s);
+								writer.write(content);
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
 						}
 						bcoordinates = false;
 					}
+					
+					characters.setLength(0);
+				}
 
+				public void characters(char ch[], int start, int length)
+						throws SAXException {
+					characters.append(new String(ch, start, length));
 				}
 
 			};
