@@ -144,7 +144,7 @@ public class ProvinceBorders {
             reader = new InputStreamReader(in);
             outputStream = new FileWriter("/home/jan/Downloads/geoserver-GetFeature.tmp2");
 
-            int c;
+            int c, count = 0;;
             
 	        try {
 	        	while ((c = reader.read()) != -1) {
@@ -152,6 +152,7 @@ public class ProvinceBorders {
 	            		line.append('\n');
 	            		String s = line.toString();
 	            		outputStream.write(s);
+	            		count++;
 	            		line.setLength(0);
 	            	}
 	            	else {
@@ -162,6 +163,7 @@ public class ProvinceBorders {
         		line.append('\n');
         		String s = line.toString();
         		outputStream.write(s);
+        		count++;
         		line.setLength(0);
 	            if (in != null) {
 	                in.close();
@@ -170,6 +172,8 @@ public class ProvinceBorders {
 	                outputStream.close();
 	            }
 	        }
+	        
+	        System.out.println("Total count of coordicates: " + count);
 	        
 		} catch (Exception e) {
 			e.printStackTrace();
