@@ -143,16 +143,17 @@ public class ProvinceBorders {
 			InputStream in = new FileInputStream(file);
 			reader = new InputStreamReader(in);
 			outputStream = new FileWriter(
-					"/home/jan/Downloads/geoserver-GetFeature.tmp2");
+					"/home/jan/git/BedAndBreakfast/json/drenthe_borders.js");
 
 			int c, count = 0, modulus = 100, linecount = 0;
 
+			outputStream.write("var drenthe_borders = [{ 'type': 'LineString', 'coordinates': [\n");
+			
 			try {
 				while ((c = reader.read()) != -1) {
 					if ((char) c == ' ') {
-						line.append('\n');
 						if ((count % modulus) == 0) {
-							String s = line.toString();
+							String s = "[" + line.toString() + "],\n";
 							outputStream.write(s);
 							linecount++;
 						}
@@ -163,8 +164,7 @@ public class ProvinceBorders {
 					}
 				}
 			} finally {
-				line.append('\n');
-				String s = line.toString();
+				String s = "[" + line.toString() + "]\n]}];";
 				outputStream.write(s);
 				linecount++;
 				count++;
@@ -176,7 +176,6 @@ public class ProvinceBorders {
 					outputStream.close();
 				}
 			}
-
 			System.out.println("Total count of coordicates: " + count
 					+ " Total count of lines:" + linecount);
 
