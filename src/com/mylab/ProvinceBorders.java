@@ -10,12 +10,12 @@ import java.io.*;
 public class ProvinceBorders {
 
 	public static void main(String argv[]) {
-		
+
 		Reader reader;
-        FileWriter outputStream = null;
-        StringBuilder line = new StringBuilder(64);
-        File file;
-        
+		FileWriter outputStream = null;
+		StringBuilder line = new StringBuilder(64);
+		File file;
+
 		try {
 
 			SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -125,7 +125,7 @@ public class ProvinceBorders {
 						}
 						bcoordinates = false;
 					}
-					
+
 					characters.setLength(0);
 				}
 
@@ -138,43 +138,48 @@ public class ProvinceBorders {
 
 			saxParser.parse("/home/jan/Downloads/geoserver-GetFeature.kml",
 					handler);
-			
-			file = new File("/home/jan/Downloads/geoserver-GetFeature.tmp");
-            InputStream in = new FileInputStream(file);
-            reader = new InputStreamReader(in);
-            outputStream = new FileWriter("/home/jan/Downloads/geoserver-GetFeature.tmp2");
 
-            int c, count = 0;;
-            
-	        try {
-	        	while ((c = reader.read()) != -1) {
-	            	if ((char) c == ' ') {
-	            		line.append('\n');
-	            		String s = line.toString();
-	            		outputStream.write(s);
-	            		count++;
-	            		line.setLength(0);
-	            	}
-	            	else {
-	            		line.append((char)c);
-	            	}
-	            }
-	        } finally {
-        		line.append('\n');
-        		String s = line.toString();
-        		outputStream.write(s);
-        		count++;
-        		line.setLength(0);
-	            if (in != null) {
-	                in.close();
-	            }
-	            if (outputStream != null) {
-	                outputStream.close();
-	            }
-	        }
-	        
-	        System.out.println("Total count of coordicates: " + count);
-	        
+			file = new File("/home/jan/Downloads/geoserver-GetFeature.tmp");
+			InputStream in = new FileInputStream(file);
+			reader = new InputStreamReader(in);
+			outputStream = new FileWriter(
+					"/home/jan/Downloads/geoserver-GetFeature.tmp2");
+
+			int c, count = 0, modulus = 100, linecount = 0;
+
+			try {
+				while ((c = reader.read()) != -1) {
+					if ((char) c == ' ') {
+						line.append('\n');
+						if ((count % modulus) == 0) {
+							String s = line.toString();
+							outputStream.write(s);
+							linecount++;
+						}
+						count++;
+						line.setLength(0);
+					} else {
+						line.append((char) c);
+					}
+				}
+			} finally {
+				line.append('\n');
+				String s = line.toString();
+				outputStream.write(s);
+				linecount++;
+				count++;
+				line.setLength(0);
+				if (in != null) {
+					in.close();
+				}
+				if (outputStream != null) {
+					outputStream.close();
+				}
+			}
+
+			System.out.println("Total count of coordicates: " + count
+					+ " Total count of lines:" + linecount);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
