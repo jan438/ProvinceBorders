@@ -158,7 +158,7 @@ public class Province {
 
 			int c, count = 0, modulus = 100, linecount = 0;
 
-			out.write("{ 'type': 'Feature', 'id': " + index + ", 'properties': { 'ID': 128058.000000, 'AREA': 54.130000, 'DATA': 7.000000, 'DISTRICT': '07', 'MEMBERS': 1.000000, 'LOCKED': 'Y', 'NAME': '', 'POP': 259008.000000, 'COLORING': 0, 'IDEAL_VALU': 252841.000000, 'DEVIATION': 6167.000000, 'F_DEVIATIO': 0.024400, 'REPRESENTATIVE': 'Richard Alarcon' }, 'geometry': { 'type': 'Polygon', 'coordinates': [[\n");
+			out.write("{ 'type': 'Feature', 'id': " + index + ", 'properties': { 'ID': 128058.000000, 'AREA': 54.130000, 'DATA': 7.000000, 'DISTRICT': \'" + province_name + "\', 'MEMBERS': 1.000000, 'LOCKED': 'Y', 'NAME': '', 'POP': 259008.000000, 'COLORING': 0, 'IDEAL_VALU': 252841.000000, 'DEVIATION': 6167.000000, 'F_DEVIATIO': 0.024400, 'REPRESENTATIVE': 'Richard Alarcon' }, 'geometry': { 'type': 'Polygon', 'coordinates': [[\n");
 
 			try {
 				while ((c = reader.read()) != -1) {
