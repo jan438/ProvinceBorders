@@ -26,7 +26,7 @@ public class Province {
 		PrintWriter out = null;
 		try {
 			out = new PrintWriter(new BufferedWriter(new FileWriter(
-					"/home/jan/git/BedAndBreakfast/json/province_borders.js",
+					ProvinceBorders.js_file,
 					true)));
 		} catch (IOException e1) {
 			e1.printStackTrace();

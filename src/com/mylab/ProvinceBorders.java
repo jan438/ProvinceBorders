@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class ProvinceBorders {
-
+	
+	public static final String js_file = "/home/jan/git/BedAndBreakfast/json/province_borders.js";
+	
 	public static void main(final String argv[]) throws IOException {
 
 		String representavive = null;
@@ -14,7 +16,7 @@ public class ProvinceBorders {
 		out = new PrintWriter(
 				new BufferedWriter(
 						new FileWriter(
-								"/home/jan/git/BedAndBreakfast/json/province_borders.js",
+								js_file,
 								false)));
 
 		out.print("var province_borders = { 'type': 'FeatureCollection','features': [ ");
@@ -38,7 +40,7 @@ public class ProvinceBorders {
 			}
 			province.process_borders(argv[index], index, representavive);
 			out = new PrintWriter(new BufferedWriter(new FileWriter(
-					"/home/jan/git/BedAndBreakfast/json/province_borders.js",
+					js_file,
 					true)));
 			if (index < argv.length - 1)
 				out.print(",");
@@ -49,7 +51,7 @@ public class ProvinceBorders {
 		out = new PrintWriter(
 				new BufferedWriter(
 						new FileWriter(
-								"/home/jan/git/BedAndBreakfast/json/province_borders.js",
+								js_file,
 								true)));
 		out.print("]}");
 		out.close();
