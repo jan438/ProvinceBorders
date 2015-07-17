@@ -9,6 +9,7 @@ public class ProvinceBorders {
 
 	public static void main(final String argv[]) throws IOException {
 
+		String representavive = null;
 		PrintWriter out = null;
 		out = new PrintWriter(
 				new BufferedWriter(
@@ -22,13 +23,25 @@ public class ProvinceBorders {
 		for (int index = 0; index < argv.length; index++) {
 			System.out.println(argv[index]);
 			Province province = new Province();
-			province.process_borders(argv[index],index);
-			out = new PrintWriter(
-					new BufferedWriter(
-							new FileWriter(
-									"/home/jan/git/BedAndBreakfast/json/province_borders.js",
-									true)));
-			if (index < argv.length - 1) out.print(",");
+			switch (index) {
+			case 0:
+				representavive = "J. Tichelaar";
+				break;
+			case 1:
+				representavive = "Th.J.F.M. Bovens";
+				break;
+			case 2:
+				representavive = "W. van Beek";
+				break;
+			default:
+				representavive = "";
+			}
+			province.process_borders(argv[index], index, representavive);
+			out = new PrintWriter(new BufferedWriter(new FileWriter(
+					"/home/jan/git/BedAndBreakfast/json/province_borders.js",
+					true)));
+			if (index < argv.length - 1)
+				out.print(",");
 			out.close();
 
 		}
