@@ -18,7 +18,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class Province {
-	public void process_borders(final String province_name, int index, String representavive) {
+	public void process_borders(final String province_name, int index,
+			String representavive) {
 
 		Reader reader;
 		StringBuilder line = new StringBuilder(64);
@@ -26,8 +27,7 @@ public class Province {
 		PrintWriter out = null;
 		try {
 			out = new PrintWriter(new BufferedWriter(new FileWriter(
-					ProvinceBorders.js_file,
-					true)));
+					ProvinceBorders.js_file, true)));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -149,8 +149,7 @@ public class Province {
 
 			};
 
-			saxParser.parse("/home/jan/Downloads/geoserver-GetFeature.kml",
-					handler);
+			saxParser.parse(ProvinceBorders.kml_file, handler);
 
 			file = new File("/home/jan/Downloads/geoserver-GetFeature.tmp");
 			InputStream in = new FileInputStream(file);
@@ -158,7 +157,13 @@ public class Province {
 
 			int c, count = 0, modulus = 100, linecount = 0;
 
-			out.write("{ 'type': 'Feature', 'id': " + index + ", 'properties': { 'ID': 128058.000000, 'AREA': 54.130000, 'DATA': 7.000000, 'DISTRICT': \'" + province_name + "\', 'MEMBERS': 1.000000, 'LOCKED': 'Y', 'NAME': '', 'POP': 259008.000000, 'COLORING': 0, 'IDEAL_VALU': 252841.000000, 'DEVIATION': 6167.000000, 'F_DEVIATIO': 0.024400, 'REPRESENTATIVE': \'" + representavive + "\' }, 'geometry': { 'type': 'Polygon', 'coordinates': [[\n");
+			out.write("{ 'type': 'Feature', 'id': "
+					+ index
+					+ ", 'properties': { 'ID': 128058.000000, 'AREA': 54.130000, 'DATA': 7.000000, 'DISTRICT': \'"
+					+ province_name
+					+ "\', 'MEMBERS': 1.000000, 'LOCKED': 'Y', 'NAME': '', 'POP': 259008.000000, 'COLORING': 0, 'IDEAL_VALU': 252841.000000, 'DEVIATION': 6167.000000, 'F_DEVIATIO': 0.024400, 'REPRESENTATIVE': \'"
+					+ representavive
+					+ "\' }, 'geometry': { 'type': 'Polygon', 'coordinates': [[\n");
 
 			try {
 				while ((c = reader.read()) != -1) {
